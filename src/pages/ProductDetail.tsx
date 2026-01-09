@@ -4,6 +4,7 @@ import { ChevronLeft, ChevronRight, Minus, Plus, Share2, Eye, ChevronDown, Chevr
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import MarqueeBanner from "@/components/MarqueeBanner";
+import { useCart } from "@/context/CartContext";
 import intensityImg from "@/assets/intensity-reference.webp";
 import personalityImg from "@/assets/personality-reference.webp";
 import concentrationImg from "@/assets/concentration-comparison.jpg";
@@ -77,6 +78,7 @@ const products: Record<string, {
 const ProductDetail = () => {
   const { slug } = useParams();
   const product = products[slug || "sandal-veer"] || products["sandal-veer"];
+  const { addItem, setIsCartOpen, setIsCheckoutOpen } = useCart();
   
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [selectedSize, setSelectedSize] = useState(product.sizes[0]);
@@ -89,6 +91,30 @@ const ProductDetail = () => {
 
   const toggleSection = (section: keyof typeof expandedSections) => {
     setExpandedSections(prev => ({ ...prev, [section]: !prev[section] }));
+  };
+
+  const handleAddToCart = () => {
+    addItem({
+      id: slug || "sandal-veer",
+      name: product.name,
+      size: selectedSize.label,
+      price: selectedSize.price,
+      quantity,
+      image: product.images[0],
+    });
+    setIsCartOpen(true);
+  };
+
+  const handleBuyNow = () => {
+    addItem({
+      id: slug || "sandal-veer",
+      name: product.name,
+      size: selectedSize.label,
+      price: selectedSize.price,
+      quantity,
+      image: product.images[0],
+    });
+    setIsCheckoutOpen(true);
   };
 
   const nextImage = () => {
@@ -353,10 +379,16 @@ const ProductDetail = () => {
 
               {/* Action Buttons */}
               <div className="space-y-3 py-4">
-                <button className="w-full bg-charcoal text-white py-3.5 text-sm font-medium uppercase tracking-wider hover:bg-charcoal/90 transition-colors">
+                <button
+                  onClick={handleAddToCart}
+                  className="w-full bg-charcoal text-white py-3.5 text-sm font-medium uppercase tracking-wider hover:bg-charcoal/90 transition-colors"
+                >
                   Add to cart
                 </button>
-                <button className="w-full bg-primary text-white py-3.5 text-sm font-medium uppercase tracking-wider hover:bg-primary/90 transition-colors">
+                <button
+                  onClick={handleBuyNow}
+                  className="w-full bg-primary text-white py-3.5 text-sm font-medium uppercase tracking-wider hover:bg-primary/90 transition-colors"
+                >
                   Buy it now
                 </button>
               </div>
