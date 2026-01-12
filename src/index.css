@@ -187,17 +187,15 @@
 
   /* Marquee Animation */
   .marquee-track {
-    width: max-content;
-    animation: marquee-scroll 18s linear infinite;
+    animation: marquee 30s linear infinite;
   }
 
-  @keyframes marquee-scroll {
-    from {
+  @keyframes marquee {
+    0% {
       transform: translateX(0);
     }
-    to {
+    100% {
       transform: translateX(-50%);
     }
   }
-
 }
