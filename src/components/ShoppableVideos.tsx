@@ -19,6 +19,14 @@ const shoppableVideos = [
     videoUrl: PERFUME_VIDEO_URL,
     product: allProducts[2],
   },
+  {
+    videoUrl: PERFUME_VIDEO_URL,
+    product: allProducts[3],
+  },
+  {
+    videoUrl: PERFUME_VIDEO_URL,
+    product: allProducts[4],
+  },
 ];
 
 const ShoppableVideos = () => {
@@ -48,47 +56,63 @@ const ShoppableVideos = () => {
   };
 
   return (
-    <section className="section-padding bg-muted">
+    <section className="section-padding bg-cream">
       <div className="container-wide">
-        {/* Header - Same style as Shop by Gender */}
-        <div className="text-center mb-12">
+        {/* Header */}
+        <div className="flex items-center justify-between mb-8">
           <h2 className="heading-section font-bold">
             Shoppable <em className="highlighted-text not-italic">Videos</em>
           </h2>
+          <div className="hidden md:flex gap-2">
+            <button
+              onClick={() => scroll("left")}
+              className="p-2 border border-charcoal/20 rounded-full hover:bg-charcoal hover:text-cream transition-colors"
+            >
+              <ChevronLeft className="w-5 h-5" />
+            </button>
+            <button
+              onClick={() => scroll("right")}
+              className="p-2 border border-charcoal/20 rounded-full hover:bg-charcoal hover:text-cream transition-colors"
+            >
+              <ChevronRight className="w-5 h-5" />
+            </button>
+          </div>
         </div>
 
-        {/* Gender-style Grid for Videos */}
-        <div className="grid md:grid-cols-3 gap-6">
+        {/* Videos Slider */}
+        <div
+          ref={scrollRef}
+          className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide scroll-smooth"
+          style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+        >
           {shoppableVideos.map((item, index) => (
-            <div key={index} className="group relative">
-              {/* Video Container - Gender style aspect ratio */}
-              <div className="relative aspect-[3/4] overflow-hidden rounded-sm">
+            <div key={index} className="flex-shrink-0 w-[260px] group">
+              <div className="relative aspect-[3/4] overflow-hidden rounded-lg bg-muted">
                 <video
                   src={item.videoUrl}
                   autoPlay
                   muted
                   loop
                   playsInline
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  className="w-full h-full object-cover"
                 />
-                <div className="absolute inset-0 bg-charcoal/20 group-hover:bg-charcoal/10 transition-colors duration-300" />
                 
                 {/* Product Info Overlay */}
-                <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-charcoal/80 to-transparent">
+                <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-charcoal/80 to-transparent">
                   <div className="flex items-end justify-between">
                     <Link to={`/products/${item.product.slug}`} className="flex-1">
-                      <h3 className="font-serif text-lg font-medium text-primary-foreground">
+                      <h3 className="font-serif text-sm font-medium text-white">
                         {item.product.name}
                       </h3>
-                      <p className="text-primary-foreground/80 text-sm">
+                      <p className="text-white/80 text-xs">
                         ₹{item.product.price.toLocaleString()}
                       </p>
                     </Link>
                     <button
                       onClick={() => handleAddToCart(item.product)}
-                      className="w-10 h-10 flex items-center justify-center bg-white rounded-full hover:bg-primary hover:text-white transition-colors"
+                      className="w-8 h-8 flex items-center justify-center bg-white rounded-full hover:bg-primary hover:text-white transition-colors"
                     >
-                      <ShoppingCart className="w-4 h-4" />
+                      <ShoppingCart className="w-3.5 h-3.5" />
                     </button>
                   </div>
                 </div>
