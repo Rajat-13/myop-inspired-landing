@@ -108,25 +108,28 @@ const BestsellersSection = () => {
     setActiveIndex(newIndex);
   };
 
-  const getCardStyle = (index: number) => {
-    const diff = index - activeIndex;
-    const absD = Math.abs(diff);
-    
-    // Base transforms for the stacked effect
-    const translateX = diff * 120; // horizontal spacing
-    const translateZ = -absD * 100; // depth
-    const rotateY = diff * -8; // rotation
-    const scale = 1 - absD * 0.1; // scale down as cards get further
-    const opacity = absD <= 2 ? 1 - absD * 0.2 : 0;
-    const zIndex = 10 - absD;
-    
-    return {
-      transform: `translateX(${translateX}px) translateZ(${translateZ}px) rotateY(${rotateY}deg) scale(${scale})`,
-      opacity,
-      zIndex,
-    };
-  };
+ const getCardStyle = (index: number) => {
+   const diff = index - activeIndex;
+   const absD = Math.abs(diff);
 
+   const translateX = diff * 220;      // ⬅️ MORE horizontal space
+   const translateZ = -absD * 140;     // ⬅️ slightly more depth
+   const rotateY = diff * -10;         // ⬅️ stronger 3D angle
+   const scale = 1 - absD * 0.08;      // ⬅️ gentler scaling
+   const opacity = absD <= 3 ? 1 - absD * 0.15 : 0;
+   const zIndex = 20 - absD;
+
+   return {
+     transform: `
+       translateX(${translateX}px)
+       translateZ(${translateZ}px)
+       rotateY(${rotateY}deg)
+       scale(${scale})
+     `,
+     opacity,
+     zIndex,
+   };
+ };
   return (
     <section id="bestsellers" className="section-padding bg-background overflow-hidden">
       <div className="container-wide">
@@ -214,7 +217,7 @@ const BestsellersSection = () => {
         <div className="relative py-8">
           <div 
             className="flex items-center justify-center min-h-[450px]"
-            style={{ perspective: "1500px" }}
+            style={{ perspective: "1200px" }}
           >
             <div className="relative flex items-center justify-center" style={{ transformStyle: "preserve-3d" }}>
               {products.map((product, index) => (
